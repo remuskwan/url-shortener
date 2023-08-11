@@ -27,9 +27,6 @@ const SignIn = () => {
 
   return (
     <BackgroundBox>
-      <RestrictedGovtMasthead
-      // This component can only be used if this is an application created by OGP.
-      />
       <BaseGridLayout flex={1}>
         <NonMobileSidebarGridArea>
           <LoginImageSvgr maxW="100%" aria-hidden />
@@ -58,15 +55,6 @@ const SignIn = () => {
             </Flex>
           </Box>
         </LoginGridArea>
-      </BaseGridLayout>
-      <BaseGridLayout
-        bg={{ base: 'base.canvas.brandLight', lg: 'transparent' }}
-      >
-        <FooterGridArea>
-          <RestrictedMiniFooter
-          // This component can only be used if this is an application created by OGP.
-          />
-        </FooterGridArea>
       </BaseGridLayout>
     </BackgroundBox>
   )

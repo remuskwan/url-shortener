@@ -4,27 +4,42 @@ import {
   FormErrorMessage,
   FormLabel,
   Input,
-  Stack,
   Wrap,
 } from '@chakra-ui/react'
 import { useZodForm } from '~/lib/form'
 import { z } from 'zod'
+import { type RouterOutput, trpc } from '~/utils/trpc'
+
+type ShortenerInputProps = {
+  //TODO: modify onSuccess
+  onSuccess: (data: RouterOutput['url']['add']) => void
+}
 
 const shortenerSchema = z.object({
-  longUrl: z.string().trim().min(1, 'Please enter a long url.'),
+  originalURL: z.string().trim().min(1, 'Please enter a long url.'),
 })
 
-const ShortenerInput = () => {
+const ShortenerInput: React.FC<ShortenerInputProps> = ({ onSuccess }) => {
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors },
   } = useZodForm({
     schema: shortenerSchema,
   })
+
+  const addUrlMutation = trpc.url.add.useMutation({
+    onSuccess,
+    onError: (error) => setError('originalURL', { message: error.message }),
+  })
+
+  const handleSubmitInput = handleSubmit(({ originalURL }) => {
+    return addUrlMutation.mutate({ originalURL })
+  })
+
   return (
-    //TODO: add onSubmit handler
-    <form>
+    <form onSubmit={handleSubmitInput}>
       <FormControl
         id="longUrl"
         isRequired
@@ -32,8 +47,8 @@ const ShortenerInput = () => {
         // isReadOnly={loginMutation.isLoading}
       >
         <FormLabel requiredIndicator={<></>}>Enter long URL</FormLabel>
-        <Input placeholder="e.g. google.com" {...register('longUrl')} />
-        <FormErrorMessage>{errors.longUrl?.message}</FormErrorMessage>
+        <Input placeholder="e.g. google.com" {...register('originalURL')} />
+        <FormErrorMessage>{errors.originalURL?.message}</FormErrorMessage>
       </FormControl>
 
       <Wrap shouldWrapChildren direction="row" align="center" mt="1rem">

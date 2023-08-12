@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 export const addUrlSchema = z.object({
-  originalURL: z.string().url(),
+  originalURL: z.string(),
 })
 
 export const byUserSchema = z.object({

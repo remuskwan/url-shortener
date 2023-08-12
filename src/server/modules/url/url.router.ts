@@ -1,8 +1,9 @@
 import { addUrlSchema, byUserSchema } from '~/schemas/url'
 import { protectedProcedure, publicProcedure, router } from '~/server/trpc'
-import { defaultUrlSelect } from './url.select'
+import { defaultUrlSelect, urlSelectWithUser } from './url.select'
 import { z } from 'zod'
 import { TRPCError } from '@trpc/server'
+import { formatURL, shortenURL } from '~/lib/url'
 
 export const urlRouter = router({
   byUser: publicProcedure.input(byUserSchema).query(async ({ ctx, input }) => {
@@ -48,16 +49,37 @@ export const urlRouter = router({
 
       return url
     }),
-  add: publicProcedure.input(addUrlSchema).mutation(async ({ ctx, input }) => {
-    //TODO: replace with KGS
-  }),
+  add: publicProcedure
+    .input(addUrlSchema)
+    .mutation(async ({ ctx, input: { originalURL } }) => {
+      //TODO: replace with KGS
+      const formattedURL = formatURL(originalURL)
+      if (!formattedURL) {
+        throw new TRPCError({
+          code: 'PARSE_ERROR',
+          message: `Could not parse '${originalURL}'`,
+        })
+      }
+
+      const hash = shortenURL(formattedURL)
+      const isLoggedIn = ctx.session?.user !== undefined
+      const url = await ctx.prisma.uRL.create({
+        data: {
+          hash,
+          originalURL: formattedURL,
+          // ...(isLoggedIn && { userId: { connect: ctx.session?.user?.id } }),
+        },
+        select: isLoggedIn ? urlSelectWithUser : defaultUrlSelect,
+      })
+      return url
+    }),
   //TODO: change to protected
   delete: protectedProcedure
     .input(z.object({ hash: z.string() }))
     .mutation(async ({ ctx, input: { hash } }) => {
       const urlToDelete = await ctx.prisma.uRL.findUnique({
         where: { hash },
-        select: defaultUrlSelect,
+        select: urlSelectWithUser,
       })
       if (!urlToDelete) {
         throw new TRPCError({

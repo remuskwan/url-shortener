@@ -21,7 +21,7 @@ export const QRView: React.FC<QRViewProps> = ({ url }) => {
 
     const downloadLink = document.createElement('a')
     downloadLink.href = pngUrl
-    downloadLink.download = 'shortened-url-qr.png'
+    downloadLink.download = `${url}-qr.png`
     document.body.appendChild(downloadLink)
     downloadLink.click()
     document.body.removeChild(downloadLink)

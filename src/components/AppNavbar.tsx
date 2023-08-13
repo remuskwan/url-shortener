@@ -32,7 +32,6 @@ export const AppNavbar = (): JSX.Element => {
           spacing={{ base: '0.75rem', md: '1.5rem' }}
         >
           <AvatarMenu
-            src={me?.image ?? undefined}
             name={me?.name ?? undefined}
             variant="subtle"
             bg="base.canvas.brand-subtle"

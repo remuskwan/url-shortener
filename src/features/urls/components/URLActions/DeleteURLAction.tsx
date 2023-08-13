@@ -3,14 +3,14 @@ import { IconButton } from '@opengovsg/design-system-react'
 import { type MouseEventHandler } from 'react'
 import { BiTrash } from 'react-icons/bi'
 import { type RouterOutput } from '~/utils/trpc'
-import { DeletePostModal } from '../DeletePostModal'
+import { DeleteURLModal } from '../DeleteURLModal'
 
-interface DeletePostActionProps {
-  postId: RouterOutput['post']['byUser']['posts'][number]['id']
+interface DeleteURLActionProps {
+  postId: RouterOutput['url']['byLoggedInUser']['items'][number]['hash']
 }
-export const DeletePostAction = ({
+export const DeleteURLAction = ({
   postId,
-}: DeletePostActionProps): JSX.Element => {
+}: DeleteURLActionProps): JSX.Element => {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   const handleOpenModal: MouseEventHandler = (e) => {
@@ -27,7 +27,7 @@ export const DeletePostAction = ({
         aria-label="Delete post"
         icon={<BiTrash fontSize="1.25rem" />}
       />
-      <DeletePostModal postId={postId} isOpen={isOpen} onClose={onClose} />
+      <DeleteURLModal urlHash={postId} isOpen={isOpen} onClose={onClose} />
     </>
   )
 }

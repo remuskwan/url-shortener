@@ -1,4 +1,4 @@
-import { URL } from '~/features/posts/components'
+import { URL } from '~/features/urls/components'
 import { trpc } from '~/utils/trpc'
 import { EmptyURLList } from './EmptyURLList'
 import { Stack, StackDivider } from '@chakra-ui/react'
@@ -18,7 +18,7 @@ export const URLList = (): JSX.Element => {
       flexDir="column"
     >
       {data.items.map((url) => (
-        <URL key={url.hash} post={url} />
+        <URL key={url.hash} url={url} />
       ))}
     </Stack>
   )

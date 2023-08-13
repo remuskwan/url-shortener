@@ -1,7 +1,7 @@
 import { Stack, StackDivider } from '@chakra-ui/react'
 import { useMemo } from 'react'
 import { APP_GRID_COLUMN } from '~/constants/layouts'
-import { SkeletonURL } from '~/features/posts/components'
+import { SkeletonURL } from '~/features/urls/components'
 
 interface SkeletonPostListProps {
   /**

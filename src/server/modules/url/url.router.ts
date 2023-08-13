@@ -103,7 +103,6 @@ export const urlRouter = router({
       })
       return url
     }),
-  //TODO: change to protected
   delete: protectedProcedure
     .input(z.object({ hash: z.string() }))
     .mutation(async ({ ctx, input: { hash } }) => {
@@ -123,11 +122,9 @@ export const urlRouter = router({
           message: `You are not authorized to delete this url`,
         })
       }
-      const url = await ctx.prisma.uRL.update({
+      const url = await ctx.prisma.uRL.delete({
         where: { hash },
-        data: { deletedAt: new Date() },
       })
-
       return url
     }),
 })

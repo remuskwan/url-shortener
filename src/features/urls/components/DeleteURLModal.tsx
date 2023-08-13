@@ -12,25 +12,25 @@ import { ResponsiveModal } from '~/components/ResponsiveModal'
 import { ResponsiveModalButtonGroup } from '~/components/ResponsiveModalButtonGroup'
 import { trpc, type RouterOutput } from '~/utils/trpc'
 
-interface DeletePostModalProps extends Pick<ModalProps, 'isOpen' | 'onClose'> {
-  postId: RouterOutput['post']['byUser']['posts'][number]['id']
+interface DeleteURLModalProps extends Pick<ModalProps, 'isOpen' | 'onClose'> {
+  urlHash: RouterOutput['url']['byLoggedInUser']['items'][number]['hash']
 }
 
-export const DeletePostModal = ({
+export const DeleteURLModal = ({
   isOpen,
   onClose,
-  postId,
-}: DeletePostModalProps) => {
+  urlHash,
+}: DeleteURLModalProps) => {
   const utils = trpc.useContext()
-  const deletePostMutation = trpc.post.delete.useMutation({
+  const deletePostMutation = trpc.url.delete.useMutation({
     onSuccess: async () => {
-      await utils.post.invalidate()
+      await utils.url.invalidate()
       onClose()
     },
   })
 
   const handleDelete = () => {
-    return deletePostMutation.mutate({ id: postId })
+    return deletePostMutation.mutate({ hash: urlHash })
   }
 
   return (
@@ -38,11 +38,8 @@ export const DeletePostModal = ({
       <ModalOverlay />
       <ModalContent>
         <ModalCloseButton />
-        <ModalHeader>Delete post</ModalHeader>
-        <ModalBody>
-          This cannot be undone, and it will be removed from your profile and
-          search results.
-        </ModalBody>
+        <ModalHeader>Delete short URL</ModalHeader>
+        <ModalBody>This action cannot be undone.</ModalBody>
         <ModalFooter>
           <ResponsiveModalButtonGroup>
             <Button
@@ -62,8 +59,9 @@ export const DeletePostModal = ({
               variant="solid"
               size={{ base: 'lg', md: 'xs' }}
               onClick={handleDelete}
+              isLoading={deletePostMutation.isLoading}
             >
-              Delete post
+              Delete
             </ResponsiveButton>
           </ResponsiveModalButtonGroup>
         </ModalFooter>

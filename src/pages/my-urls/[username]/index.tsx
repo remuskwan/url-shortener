@@ -1,6 +1,6 @@
 import { Stack, StackDivider } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
-import { URL } from '~/features/posts/components'
+import { URL } from '~/features/urls/components'
 import { trpc } from '~/utils/trpc'
 
 export const MyURLsList = (): JSX.Element => {

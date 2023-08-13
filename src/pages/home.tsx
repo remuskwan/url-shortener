@@ -18,7 +18,6 @@ const Home: NextPageWithLayout = () => {
       >
         <Box gridColumn={APP_GRID_COLUMN}>
           <NewURLBanner />
-          {/* <ShortenerForm /> */}
         </Box>
       </AppGrid>
       <AppGrid

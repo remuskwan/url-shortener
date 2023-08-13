@@ -4,7 +4,7 @@ import NextLink from 'next/link'
 import { useMemo } from 'react'
 import { formatRelativeTime } from '~/lib/dates'
 import { type RouterOutput } from '~/utils/trpc'
-import { PostActions } from '../PostActions'
+import { URLActions } from '../URLActions'
 
 export interface URLViewProps {
   url: RouterOutput['url']['byLoggedInUser']['items'][number]
@@ -55,7 +55,7 @@ export const URLView = ({
           </Text>
         </Stack>
       </Stack>
-      <Stack>{!hideActions && <PostActions url={url} />}</Stack>
+      <Stack>{!hideActions && <URLActions url={url} />}</Stack>
     </Stack>
   )
 }

@@ -4,15 +4,18 @@ import {
   FormErrorMessage,
   FormLabel,
   Input,
+  Stack,
   Wrap,
+  useToast,
 } from '@chakra-ui/react'
 import { useZodForm } from '~/lib/form'
 import { z } from 'zod'
 import { type RouterOutput, trpc } from '~/utils/trpc'
+import { useState } from 'react'
 
-type ShortenerInputProps = {
+interface ShortenerInputProps {
   //TODO: modify onSuccess
-  onSuccess: (data: RouterOutput['url']['add']) => void
+  onSuccess?: (data: RouterOutput['url']['add']) => void
 }
 
 const shortenerSchema = z.object({
@@ -20,17 +23,28 @@ const shortenerSchema = z.object({
 })
 
 const ShortenerInput: React.FC<ShortenerInputProps> = ({ onSuccess }) => {
+  const [newURL, setNewURL] = useState('')
+
+  const toast = useToast()
+
   const {
     register,
     handleSubmit,
     setError,
+    reset,
     formState: { errors },
   } = useZodForm({
     schema: shortenerSchema,
   })
 
   const addUrlMutation = trpc.url.add.useMutation({
-    onSuccess,
+    onSuccess: (data) => {
+      toast({ description: 'URL shortened!', status: 'success' })
+      setNewURL(`${window.location.href}${data.hash}`)
+      if (!!onSuccess) {
+        onSuccess(data)
+      }
+    },
     onError: (error) => setError('originalURL', { message: error.message }),
   })
 
@@ -38,21 +52,39 @@ const ShortenerInput: React.FC<ShortenerInputProps> = ({ onSuccess }) => {
     return addUrlMutation.mutate({ originalURL })
   })
 
+  const handleShortenAnother = () => {
+    reset()
+    setNewURL('')
+  }
+
   return (
     <form onSubmit={handleSubmitInput}>
-      <FormControl
-        id="longUrl"
-        isRequired
-        isInvalid={!!errors.originalURL}
-        isReadOnly={addUrlMutation.isLoading}
-      >
-        <FormLabel requiredIndicator={<></>}>Enter long URL</FormLabel>
-        <Input placeholder="e.g. google.com" {...register('originalURL')} />
-        <FormErrorMessage>{errors.originalURL?.message}</FormErrorMessage>
-      </FormControl>
+      <Stack direction="column" spacing="1rem">
+        <FormControl
+          id="longUrl"
+          isInvalid={!!errors.originalURL}
+          isReadOnly={addUrlMutation.isLoading}
+        >
+          <FormLabel requiredIndicator={<></>}>Enter long URL</FormLabel>
+          <Input placeholder="e.g. google.com" {...register('originalURL')} />
+          <FormErrorMessage>{errors.originalURL?.message}</FormErrorMessage>
+        </FormControl>
+        {!!newURL && (
+          <FormControl id="shortUrl" isReadOnly>
+            <FormLabel requiredIndicator={<></>}>Shortened URL</FormLabel>
+            <Input value={newURL} />
+          </FormControl>
+        )}
+      </Stack>
 
       <Wrap shouldWrapChildren direction="row" align="center" mt="1rem">
-        <Button type="submit">Shorten</Button>
+        {!!newURL ? (
+          <Button onClick={handleShortenAnother}>Shorten another</Button>
+        ) : (
+          <Button type="submit" isLoading={addUrlMutation.isLoading}>
+            {`Shorten${!!newURL ? ' another' : ''}`}
+          </Button>
+        )}
       </Wrap>
     </form>
   )

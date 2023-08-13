@@ -1,3 +1,3 @@
 export * from './URL'
 export * from './URLView'
-export * from './SkeletonPost'
+export * from './SkeletonURL'

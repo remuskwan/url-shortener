@@ -7,8 +7,8 @@ const encodeBase62 = (buffer: Buffer): string => {
   let number = BigInt(`0x${buffer.toString('hex')}`)
   let encoded = ''
   while (number) {
-    encoded = BASE62[Number(number % 62n)] + encoded
-    number /= 62n
+    encoded = BASE62[Number(number % BigInt(62))] + encoded
+    number /= BigInt(62)
   }
   return encoded
 }

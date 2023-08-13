@@ -4,6 +4,8 @@ import {
   FormErrorMessage,
   FormLabel,
   Input,
+  InputGroup,
+  InputRightElement,
   Stack,
   Wrap,
   useToast,
@@ -12,9 +14,9 @@ import { useZodForm } from '~/lib/form'
 import { z } from 'zod'
 import { type RouterOutput, trpc } from '~/utils/trpc'
 import { useState } from 'react'
+import { CopyAction } from '../ShortenerActions'
 
 interface ShortenerInputProps {
-  //TODO: modify onSuccess
   onSuccess?: (data: RouterOutput['url']['add']) => void
 }
 
@@ -22,7 +24,9 @@ const shortenerSchema = z.object({
   originalURL: z.string().trim().min(1, 'Please enter a long url.'),
 })
 
-const ShortenerInput: React.FC<ShortenerInputProps> = ({ onSuccess }) => {
+export const ShortenerInput: React.FC<ShortenerInputProps> = ({
+  onSuccess,
+}) => {
   const [newURL, setNewURL] = useState('')
 
   const toast = useToast()
@@ -72,7 +76,12 @@ const ShortenerInput: React.FC<ShortenerInputProps> = ({ onSuccess }) => {
         {!!newURL && (
           <FormControl id="shortUrl" isReadOnly>
             <FormLabel requiredIndicator={<></>}>Shortened URL</FormLabel>
-            <Input value={newURL} />
+            <InputGroup size="md">
+              <Input value={newURL} />
+              <InputRightElement width="4.5rem">
+                <CopyAction url={newURL} />
+              </InputRightElement>
+            </InputGroup>
           </FormControl>
         )}
       </Stack>
@@ -89,5 +98,3 @@ const ShortenerInput: React.FC<ShortenerInputProps> = ({ onSuccess }) => {
     </form>
   )
 }
-
-export default ShortenerInput

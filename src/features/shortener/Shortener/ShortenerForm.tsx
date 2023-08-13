@@ -1,10 +1,10 @@
 import { Box, Flex, Text } from '@chakra-ui/react'
-import ShortenerInput from './ShortenerInput'
 import { env } from '~/env.mjs'
+import { ShortenerInput } from './ShortenerInput'
 
 const title = env.NEXT_PUBLIC_APP_NAME
 
-const ShortenerForm = () => {
+export const ShortenerForm = () => {
   return (
     <Box minH={{ base: 'auto', lg: '17.25rem' }} w="100%">
       <Flex mb={{ base: '2.5rem', lg: 0 }} flexDir="column">
@@ -25,5 +25,3 @@ const ShortenerForm = () => {
     </Box>
   )
 }
-
-export default ShortenerForm

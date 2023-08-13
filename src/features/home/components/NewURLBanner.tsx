@@ -1,5 +1,5 @@
 import { useToast } from '@chakra-ui/react'
-import ShortenerInput from '~/features/shortener/ShortenerInput'
+import { ShortenerInput } from '~/features/shortener/Shortener'
 import { trpc } from '~/utils/trpc'
 
 export const NewURLBanner = (): JSX.Element => {

@@ -1,5 +1,5 @@
 import { AppPublicHeader, LandingSection } from '~/features/landing/components'
-import ShortenerForm from '~/features/shortener/ShortenerForm'
+import { ShortenerForm } from '~/features/shortener/Shortener'
 
 const LandingPage = () => {
   return (

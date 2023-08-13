@@ -1,7 +1,5 @@
-import { Tooltip } from '@chakra-ui/react'
-import { IconButton } from '@opengovsg/design-system-react'
+import { Button, Tooltip } from '@chakra-ui/react'
 import { useState, type MouseEventHandler, useEffect } from 'react'
-import { BiLink } from 'react-icons/bi'
 
 interface CopyActionProps {
   url: string
@@ -26,13 +24,16 @@ export const CopyAction = ({ url }: CopyActionProps): JSX.Element => {
 
   return (
     <Tooltip label="Link copied!" hasArrow isOpen={isOpen}>
-      <IconButton
+      <Button
+        h="1.75rem"
+        size="sm"
         onMouseLeave={() => setIsOpen(false)}
         data-value="url-action"
         aria-label="Link to original URL"
-        icon={<BiLink fontSize="1.25rem" />}
         onClick={handleCopyLink}
-      />
+      >
+        Copy
+      </Button>
     </Tooltip>
   )
 }

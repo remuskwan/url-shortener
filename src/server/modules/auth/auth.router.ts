@@ -11,25 +11,36 @@ export const authRouter = router({
     .input(z.object({ email: z.string().email(), password: z.string().min(8) }))
     .mutation(async ({ ctx, input: { email, password } }) => {
       try {
-        //first check if the user already exists
-        const hashedPassword = await hashPassword(password)
-        const emailName = email.split('@')[0] ?? 'unknown'
-        const user = await ctx.prisma.user.upsert({
-          where: { email },
-          update: {},
-          create: {
-            email,
-            password: hashedPassword,
-            emailVerified: new Date(),
-            name: emailName,
-            username: generateUsername(emailName),
-          },
-          select: defaultMeSelect,
+        return await ctx.prisma.$transaction(async (tx) => {
+          //first check if the user already exists
+          const user = await tx.user.findUnique({
+            where: { email },
+            select: defaultMeSelect,
+          })
+          //if the user exists, throw an error
+          if (user) {
+            throw new TRPCError({
+              code: 'CONFLICT',
+              message: 'Email address already exists. Log in instead.',
+            })
+          }
+          const hashedPassword = await hashPassword(password)
+          const emailName = email.split('@')[0] ?? 'unknown'
+          //create new user with credentials
+          const newUser = await tx.user.create({
+            data: {
+              email,
+              password: hashedPassword,
+              emailVerified: new Date(),
+              name: emailName,
+              username: generateUsername(emailName),
+            },
+            select: defaultMeSelect,
+          })
+          set(ctx, 'session.user', user)
+          await ctx.session?.save()
+          return newUser
         })
-        //TODO: Login user. Only set useId in session
-        set(ctx, 'session.user', user)
-        await ctx.session?.save()
-        return user
       } catch (e) {
         if (e instanceof Error) {
           throw new TRPCError({

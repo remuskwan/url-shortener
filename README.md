@@ -29,6 +29,13 @@ Access the live demo at https://url-shortener-remus.vercel.app/
 
 ### Encoding Collisions
 
+## Future Improvements
+
+Due to time constraints, certain functionalities have yet to be implemented:
+
+- Password validation to ensure accounts are created with strong passwords
+- Search/filter functionality for user created URLs
+
 ## Running the app locally
 
 ### Install dependencies

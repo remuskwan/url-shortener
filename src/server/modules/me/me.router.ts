@@ -12,6 +12,7 @@ import { defaultMeSelect } from './me.select'
 
 export const meRouter = router({
   get: protectedProcedure.query(async ({ ctx }) => {
+    console.log(ctx.session.user.id)
     return await ctx.prisma.user.findUniqueOrThrow({
       where: { id: ctx.session.user.id },
       select: defaultMeSelect,

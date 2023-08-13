@@ -14,3 +14,10 @@ export const defaultMeSelect = Prisma.validator<Prisma.UserSelect>()({
   image: true,
   name: true,
 })
+export const meSelectWithPassword = Prisma.validator<Prisma.UserSelect>()({
+  id: true,
+  email: true,
+  username: true,
+  name: true,
+  password: true,
+})

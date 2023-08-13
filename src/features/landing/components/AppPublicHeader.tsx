@@ -6,6 +6,7 @@ import {
   useIsMobile,
 } from '@opengovsg/design-system-react'
 import NextLink from 'next/link'
+import { env } from '~/env.mjs'
 import { SIGN_IN } from '~/lib/routes'
 import { AppGrid } from '~/templates/AppGrid'
 
@@ -70,7 +71,7 @@ export const AppPublicHeader = ({
         align="center"
         py={{ base: '0.625rem', md: '4.5rem' }}
       >
-        <NextLink href="/">Starter Kit</NextLink>
+        <NextLink href="/">{env.NEXT_PUBLIC_APP_NAME}</NextLink>
         <HStack
           textStyle="subhead-1"
           spacing={{ base: '1rem', md: '2rem', xl: '2.5rem' }}

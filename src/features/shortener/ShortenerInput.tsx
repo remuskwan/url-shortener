@@ -43,8 +43,8 @@ const ShortenerInput: React.FC<ShortenerInputProps> = ({ onSuccess }) => {
       <FormControl
         id="longUrl"
         isRequired
-        // isInvalid={!!errors.email}
-        // isReadOnly={loginMutation.isLoading}
+        isInvalid={!!errors.originalURL}
+        isReadOnly={addUrlMutation.isLoading}
       >
         <FormLabel requiredIndicator={<></>}>Enter long URL</FormLabel>
         <Input placeholder="e.g. google.com" {...register('originalURL')} />

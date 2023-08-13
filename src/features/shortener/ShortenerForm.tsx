@@ -3,9 +3,7 @@ import React, { useState } from 'react'
 import ShortenerInput from './ShortenerInput'
 import { env } from '~/env.mjs'
 import { type RouterOutput } from '~/utils/trpc'
-import { useRouter } from 'next/router'
 
-//TODO: replace with public app name
 const title = env.NEXT_PUBLIC_APP_NAME
 
 const ShortenerForm = () => {
@@ -15,7 +13,6 @@ const ShortenerForm = () => {
 
   const handleShortenerInputSuccess = (data: RouterOutput['url']['add']) => {
     toast({ description: 'URL shortened!', status: 'success' })
-    console.log(data)
     setNewURL(`${window.location.href}${data.hash}`)
   }
 

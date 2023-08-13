@@ -15,6 +15,7 @@ export const urlSelectWithUser = Prisma.validator<Prisma.URLSelect>()({
   userId: true,
   user: {
     select: {
+      name: true,
       username: true,
     },
   },

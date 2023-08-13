@@ -2,7 +2,7 @@ import { Box, Flex } from '@chakra-ui/react'
 import { SkeletonPostList } from '~/components/SkeletonPostList'
 import Suspense from '~/components/Suspense'
 import { APP_GRID_COLUMN, APP_GRID_TEMPLATE_COLUMN } from '~/constants/layouts'
-import { NewPostBanner, PostList } from '~/features/home/components'
+import { NewURLBanner, URLList } from '~/features/home/components'
 import { type NextPageWithLayout } from '~/lib/types'
 import { AppGrid } from '~/templates/AppGrid'
 import { AdminLayout } from '~/templates/layouts/AdminLayout'
@@ -17,7 +17,8 @@ const Home: NextPageWithLayout = () => {
         py="1rem"
       >
         <Box gridColumn={APP_GRID_COLUMN}>
-          <NewPostBanner />
+          <NewURLBanner />
+          {/* <ShortenerForm /> */}
         </Box>
       </AppGrid>
       <AppGrid
@@ -28,7 +29,7 @@ const Home: NextPageWithLayout = () => {
         px={{ base: '1rem', lg: 0 }}
       >
         <Suspense fallback={<SkeletonPostList />}>
-          <PostList />
+          <URLList />
         </Suspense>
       </AppGrid>
     </Flex>

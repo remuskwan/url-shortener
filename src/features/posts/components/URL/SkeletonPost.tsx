@@ -5,14 +5,14 @@ import {
   Stack,
   Text,
 } from '@chakra-ui/react'
-import { type PostViewProps } from './PostView'
+import { type URLViewProps } from './URLView'
 
-type SkeletonPostProps = Omit<PostViewProps, 'post'>
+type SkeletonURLProps = Omit<URLViewProps, 'url'>
 
-export const SkeletonPost = ({
+export const SkeletonURL = ({
   containerProps,
   hideActions,
-}: SkeletonPostProps): JSX.Element => {
+}: SkeletonURLProps): JSX.Element => {
   return (
     <Stack flexDir="column" py="1.5rem" spacing="1rem" {...containerProps}>
       <Stack spacing="1rem" direction="row">

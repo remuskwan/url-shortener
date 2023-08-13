@@ -2,14 +2,12 @@ import { Flex, HStack } from '@chakra-ui/react'
 import {
   AvatarMenu,
   AvatarMenuDivider,
-  Link,
   Menu,
 } from '@opengovsg/design-system-react'
-import Image from 'next/image'
 import NextLink from 'next/link'
 import { ADMIN_NAVBAR_HEIGHT } from '~/constants/layouts'
+import { env } from '~/env.mjs'
 import { useMe } from '~/features/me/api'
-import { SETTINGS_PROFILE } from '~/lib/routes'
 
 export const AppNavbar = (): JSX.Element => {
   const { me, logout } = useMe()
@@ -28,16 +26,7 @@ export const AppNavbar = (): JSX.Element => {
         borderBottomWidth="1px"
         borderColor="base.divider.medium"
       >
-        <Link as={NextLink} href="/home">
-          <Image
-            // This component can only be used if this is an application created by OGP.
-            src="/assets/restricted-ogp-logo-full.svg"
-            width={233}
-            height={12}
-            alt="OGP Logo"
-            priority
-          />
-        </Link>
+        <NextLink href="/home">{env.NEXT_PUBLIC_APP_NAME}</NextLink>
         <HStack
           textStyle="subhead-1"
           spacing={{ base: '0.75rem', md: '1.5rem' }}
@@ -49,9 +38,6 @@ export const AppNavbar = (): JSX.Element => {
             bg="base.canvas.brand-subtle"
             menuListProps={{ maxWidth: '19rem' }}
           >
-            <Menu.Item as={NextLink} href={SETTINGS_PROFILE}>
-              Edit profile
-            </Menu.Item>
             <AvatarMenuDivider />
             <Menu.Item onClick={() => logout()}>Sign out</Menu.Item>
           </AvatarMenu>

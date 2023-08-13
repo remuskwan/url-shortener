@@ -18,7 +18,7 @@ import { trpc, type RouterOutput } from '~/utils/trpc'
 import { useUploadImagesMutation } from '../../api'
 import { clientAddReplySchema } from '../../schemas/clientAddPostSchema'
 import { ComposePost } from '../ComposePost'
-import { PostView } from '../Post/PostView'
+import { URLView } from '../URL/URLView'
 import { ResponsiveModalButtonGroup } from '~/components/ResponsiveModalButtonGroup'
 import { ResponsiveButton } from '~/components/ResponsiveButton'
 
@@ -88,7 +88,7 @@ export const AddCommentModal = ({
         <ModalHeader>Reply post</ModalHeader>
         <ModalBody>
           <Stack spacing="1.5rem">
-            <PostView
+            <URLView
               containerProps={{
                 px: 0,
                 mx: 0,

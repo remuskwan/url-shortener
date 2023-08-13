@@ -1,6 +1,6 @@
 import { Stack, StackDivider } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
-import { Post } from '~/features/posts/components'
+import { URL } from '~/features/posts/components'
 import { trpc } from '~/utils/trpc'
 
 export const MyURLsList = (): JSX.Element => {
@@ -13,7 +13,7 @@ export const MyURLsList = (): JSX.Element => {
   return (
     <Stack spacing={0} divider={<StackDivider />} py="1rem">
       {data.posts.map((p) => (
-        <Post key={p.id} post={p} />
+        <URL key={p.id} post={p} />
       ))}
     </Stack>
   )

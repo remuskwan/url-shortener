@@ -1,13 +1,15 @@
-import { Stack, Text } from '@chakra-ui/react'
-import { NewPostModalButton } from '~/features/posts/components'
+import { useToast } from '@chakra-ui/react'
+import ShortenerInput from '~/features/shortener/ShortenerInput'
+import { trpc } from '~/utils/trpc'
 
-export const NewPostBanner = (): JSX.Element => {
-  return (
-    <Stack justify="space-between" direction="row" align="center">
-      <Text as="h2" textStyle="h6">
-        What’s on your mind?
-      </Text>
-      <NewPostModalButton />
-    </Stack>
-  )
+export const NewURLBanner = (): JSX.Element => {
+  const utils = trpc.useContext()
+  const toast = useToast()
+
+  const handleShortenerInputSuccess = async () => {
+    toast({ description: 'URL shortened!', status: 'success' })
+    await utils.url.invalidate()
+  }
+
+  return <ShortenerInput onSuccess={handleShortenerInputSuccess} />
 }

@@ -19,8 +19,8 @@ export const shortenURL = (originalURL: string): string => {
   const hash = createHash('sha256').update(uniqueString).digest()
   // Encode in base-62
   const encoded = encodeBase62(hash)
-  // Optionally, trim to a fixed length
-  const shortened = encoded.slice(0, 10)
+  // Trim to a fixed length
+  const shortened = encoded.slice(0, 8)
 
   return shortened
 }

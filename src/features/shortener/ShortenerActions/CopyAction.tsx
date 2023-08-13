@@ -25,8 +25,9 @@ export const CopyAction = ({ url }: CopyActionProps): JSX.Element => {
   return (
     <Tooltip label="Link copied!" hasArrow isOpen={isOpen}>
       <Button
-        h="1.75rem"
-        size="sm"
+        variant="clear"
+        size="xs"
+        colorScheme="blue"
         onMouseLeave={() => setIsOpen(false)}
         data-value="url-action"
         aria-label="Link to original URL"

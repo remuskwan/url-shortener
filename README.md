@@ -35,7 +35,9 @@ Due to time constraints, certain functionalities have yet to be implemented:
 
 - Password validation to ensure accounts are created with strong passwords.
 - Search/filter functionality for user-created URLs.
+- Implement soft delete for user and URLs
 - Standalone Key Generation Store that generates random strings beforehand and stores them in a database
+- Forgot password + email verification
 - Distinct look and feel to the application.
 
 ## Running the app locally
@@ -83,7 +85,6 @@ npm run setup      # starts cockroach db + runs migrations + seed
 npm run test-dev   # runs e2e tests on dev
 npm run test-start # runs e2e tests on `next start` - build required before
 npm run test:unit  # runs normal Vitest unit tests
-npm run test:e2e   # runs e2e tests
 ```
 
 ---

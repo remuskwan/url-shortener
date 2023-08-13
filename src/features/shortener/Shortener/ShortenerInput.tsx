@@ -79,7 +79,7 @@ export const ShortenerInput: React.FC<ShortenerInputProps> = ({
             <FormLabel requiredIndicator={<></>}>Shortened URL</FormLabel>
             <InputGroup size="md">
               <Input value={newURL} />
-              <InputRightElement width="4.5rem">
+              <InputRightElement mr="1rem">
                 <CopyAction url={newURL} />
               </InputRightElement>
             </InputGroup>

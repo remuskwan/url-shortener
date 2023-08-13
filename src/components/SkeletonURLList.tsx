@@ -11,7 +11,7 @@ interface SkeletonPostListProps {
   count?: number
 }
 
-export const SkeletonPostList = ({
+export const SkeletonURLList = ({
   count = 10,
 }: SkeletonPostListProps): JSX.Element => {
   const skeletonPosts = useMemo(() => {

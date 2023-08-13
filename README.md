@@ -33,8 +33,10 @@ Access the live demo at https://url-shortener-remus.vercel.app/
 
 Due to time constraints, certain functionalities have yet to be implemented:
 
-- Password validation to ensure accounts are created with strong passwords
-- Search/filter functionality for user created URLs
+- Password validation to ensure accounts are created with strong passwords.
+- Search/filter functionality for user-created URLs.
+- Standalone Key Generation Store that generates random strings beforehand and stores them in a database
+- Distinct look and feel to the application.
 
 ## Running the app locally
 

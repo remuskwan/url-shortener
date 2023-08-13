@@ -1,5 +1,5 @@
 import { Box, Flex } from '@chakra-ui/react'
-import { SkeletonPostList } from '~/components/SkeletonPostList'
+import { SkeletonURLList } from '~/components/SkeletonURLList'
 import Suspense from '~/components/Suspense'
 import { APP_GRID_COLUMN, APP_GRID_TEMPLATE_COLUMN } from '~/constants/layouts'
 import { NewURLBanner, URLList } from '~/features/home/components'
@@ -27,7 +27,7 @@ const Home: NextPageWithLayout = () => {
         templateColumns={APP_GRID_TEMPLATE_COLUMN}
         px={{ base: '1rem', lg: 0 }}
       >
-        <Suspense fallback={<SkeletonPostList />}>
+        <Suspense fallback={<SkeletonURLList />}>
           <URLList />
         </Suspense>
       </AppGrid>

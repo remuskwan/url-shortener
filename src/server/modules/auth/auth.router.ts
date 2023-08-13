@@ -31,7 +31,6 @@ export const authRouter = router({
             data: {
               email,
               password: hashedPassword,
-              emailVerified: new Date(),
               name: emailName,
               username: generateUsername(emailName),
             },
@@ -68,7 +67,7 @@ export const authRouter = router({
       if (!user) {
         throw new TRPCError({
           code: 'NOT_FOUND',
-          message: 'Email address does not exist.',
+          message: 'Email address does not exist. Sign up instead.',
         })
       }
       try {

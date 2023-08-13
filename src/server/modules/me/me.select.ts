@@ -7,11 +7,8 @@ import { Prisma } from '@prisma/client'
  */
 export const defaultMeSelect = Prisma.validator<Prisma.UserSelect>()({
   id: true,
-  bio: true,
   email: true,
-  emailVerified: true,
   username: true,
-  image: true,
   name: true,
 })
 export const meSelectWithPassword = Prisma.validator<Prisma.UserSelect>()({

@@ -5,6 +5,8 @@ import { useMemo } from 'react'
 import { formatRelativeTime } from '~/lib/dates'
 import { type RouterOutput } from '~/utils/trpc'
 import { URLActions } from '../URLActions'
+import { formatNewURL } from '../../utils/formatNewURL'
+import { QRView } from './QRView'
 
 export interface URLViewProps {
   url: RouterOutput['url']['byLoggedInUser']['items'][number]
@@ -19,21 +21,20 @@ export const URLView = ({
 }: URLViewProps): JSX.Element => {
   const relativeDate = useMemo(() => formatRelativeTime(url.createdAt), [url])
 
-  const path = `${window.location.hostname}${
-    window.location.port ? ':' + window.location.port : ''
-  }`
+  const newURL = formatNewURL(url.hash)
+
   return (
     <Stack
       flexDir="column"
-      spacing="1.5rem"
+      spacing={0}
       px={{ base: '1rem', lg: '1.5rem' }}
       mx={{ base: '-1rem', lg: '-1.5rem' }}
       {...containerProps}
     >
-      <Stack spacing="1rem" direction="row">
-        <Stack spacing={0}>
+      <Stack justifyContent="space-between" spacing="1rem" direction="row">
+        <Stack spacing="1rem">
           <Text textStyle="subhead-2" color="base.content.strong">
-            {`${path}/${url.hash}`}
+            {newURL}
           </Text>
           <Link
             data-value="url-action"
@@ -54,6 +55,7 @@ export const URLView = ({
             {relativeDate}
           </Text>
         </Stack>
+        <QRView url={newURL} />
       </Stack>
       <Stack>{!hideActions && <URLActions url={url} />}</Stack>
     </Stack>

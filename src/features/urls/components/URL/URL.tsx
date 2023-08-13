@@ -13,8 +13,6 @@ export const URL = ({ url, hideActions }: URLProps): JSX.Element => {
         py: '1.5rem',
         layerStyle: 'url',
         tabIndex: 0,
-        cursor: 'pointer',
-        role: 'button',
       }}
       url={url}
       hideActions={hideActions}

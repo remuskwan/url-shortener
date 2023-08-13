@@ -1,2 +1,2 @@
-export * from './NewPostBanner'
+export * from './NewURLBanner'
 export * from './URLList'

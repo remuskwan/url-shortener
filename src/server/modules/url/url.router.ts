@@ -62,8 +62,7 @@ export const urlRouter = router({
 
     return { items, nextCursor }
   }),
-  //TODO: change to protected
-  byHash: protectedProcedure
+  byHash: publicProcedure
     .input(z.object({ hash: z.string() }))
     .query(async ({ ctx, input: { hash } }) => {
       const url = await ctx.prisma.uRL.findUnique({

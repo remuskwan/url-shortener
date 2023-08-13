@@ -15,7 +15,7 @@ const RedirectToOriginalLoading = () => {
   )
 }
 
-export const RedirectToOriginal = () => {
+const RedirectToOriginal = () => {
   const router = useRouter()
 
   trpc.url.byHash.useSuspenseQuery(
@@ -24,6 +24,7 @@ export const RedirectToOriginal = () => {
     },
     {
       onSuccess: async ({ originalURL }) => {
+        console.log(originalURL)
         await router.replace(originalURL)
       },
       onError: async (error) => {
@@ -36,3 +37,5 @@ export const RedirectToOriginal = () => {
 
   return <RedirectToOriginalLoading />
 }
+
+export default RedirectToOriginal

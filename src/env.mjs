@@ -17,7 +17,7 @@ const coerceBoolean = z
 const client = z.object({
   NEXT_PUBLIC_ENABLE_STORAGE: coerceBoolean.default('false'),
   NEXT_PUBLIC_ENABLE_SGID: coerceBoolean.default('false'),
-  NEXT_PUBLIC_APP_NAME: z.string().default('Starter Kit'),
+  NEXT_PUBLIC_APP_NAME: z.string().default('URL Shortener'),
 })
 
 /** Feature flags */
@@ -45,28 +45,6 @@ const r2ServerSchema = z.discriminatedUnion('NEXT_PUBLIC_ENABLE_STORAGE', [
   }),
 ])
 
-const baseSgidSchema = z.object({
-  SGID_CLIENT_ID: z.string().optional(),
-  SGID_CLIENT_SECRET: z.string().optional(),
-  // Remember to set SGID redirect URI in SGID dev portal.
-  SGID_REDIRECT_URI: z.union([z.string().url(), z.string()]).optional(),
-  SGID_PRIVATE_KEY: z.string().optional(),
-})
-
-const sgidServerSchema = z.discriminatedUnion('NEXT_PUBLIC_ENABLE_SGID', [
-  baseSgidSchema.extend({
-    NEXT_PUBLIC_ENABLE_SGID: z.literal(true),
-    // Add required keys if flag is enabled.
-    SGID_CLIENT_ID: z.string().min(1),
-    SGID_CLIENT_SECRET: z.string().min(1),
-    SGID_PRIVATE_KEY: z.string().min(1),
-    SGID_REDIRECT_URI: z.string().url(),
-  }),
-  baseSgidSchema.extend({
-    NEXT_PUBLIC_ENABLE_SGID: z.literal(false),
-  }),
-])
-
 /**
  * Specify your server-side environment variables schema here. This way you can ensure the app isn't
  * built with invalid env vars.
@@ -86,7 +64,6 @@ const server = z
   })
   // Add on schemas as needed that requires conditional validation.
   .merge(baseR2Schema)
-  .merge(baseSgidSchema)
   .merge(client)
   // Add on refinements as needed for conditional environment variables
   // .superRefine((val, ctx) => ...)
@@ -97,19 +74,6 @@ const server = z
         code: z.ZodIssueCode.custom,
         path: ['NEXT_PUBLIC_ENABLE_STORAGE'],
         message: 'R2 environment variables are missing',
-      })
-      parse.error.issues.forEach((issue) => {
-        ctx.addIssue(issue)
-      })
-    }
-  })
-  .superRefine((val, ctx) => {
-    const parse = sgidServerSchema.safeParse(val)
-    if (!parse.success) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        path: ['NEXT_PUBLIC_ENABLE_SGID'],
-        message: 'SGID environment variables are missing',
       })
       parse.error.issues.forEach((issue) => {
         ctx.addIssue(issue)
@@ -144,10 +108,6 @@ const processEnv = {
   R2_IMAGES_DIRECTORY: process.env.R2_IMAGES_DIRECTORY,
   R2_PUBLIC_HOSTNAME: process.env.R2_PUBLIC_HOSTNAME,
   R2_SECRET_ACCESS_KEY: process.env.R2_SECRET_ACCESS_KEY,
-  SGID_CLIENT_ID: process.env.SGID_CLIENT_ID,
-  SGID_CLIENT_SECRET: process.env.SGID_CLIENT_SECRET,
-  SGID_PRIVATE_KEY: process.env.SGID_PRIVATE_KEY,
-  SGID_REDIRECT_URI: process.env.SGID_REDIRECT_URI,
   // Client-side env vars
   NEXT_PUBLIC_APP_NAME: process.env.NEXT_PUBLIC_APP_NAME,
   NEXT_PUBLIC_ENABLE_STORAGE: process.env.NEXT_PUBLIC_ENABLE_STORAGE,

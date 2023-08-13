@@ -1,9 +1,3 @@
-/**
- *
- * This is an example router, you can delete this file and then update `../pages/api/trpc/[trpc].tsx`
- */
-import { z } from 'zod'
-import { env } from '~/env.mjs'
 import { protectedProcedure, router } from '~/server/trpc'
 import { updateMeSchema } from '~/schemas/me'
 import { TRPCError } from '@trpc/server'
@@ -17,21 +11,6 @@ export const meRouter = router({
       select: defaultMeSelect,
     })
   }),
-  updateAvatar: protectedProcedure
-    .input(
-      z.object({
-        imageKey: z.string().nullish(),
-      })
-    )
-    .mutation(async ({ ctx, input }) => {
-      return await ctx.prisma.user.update({
-        where: { id: ctx.session.user.id },
-        data: {
-          image: `https://${env.R2_PUBLIC_HOSTNAME}/${input.imageKey}`,
-        },
-        select: defaultMeSelect,
-      })
-    }),
   update: protectedProcedure
     .input(updateMeSchema)
     .mutation(async ({ ctx, input }) => {

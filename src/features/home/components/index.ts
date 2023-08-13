@@ -1,2 +1,2 @@
-export * from './NewPostBanner'
-export * from './PostList'
+export * from './NewURLBanner'
+export * from './URLList'

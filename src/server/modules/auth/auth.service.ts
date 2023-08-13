@@ -1,6 +1,6 @@
 import { type Prisma, type PrismaClient } from '@prisma/client'
 import { VerificationError } from './auth.error'
-import { compareHash } from './auth.util'
+import { compareHashes } from './auth.util'
 
 export const verifyToken = async (
   prisma: PrismaClient,
@@ -24,7 +24,7 @@ export const verifyToken = async (
 
     if (
       verificationToken.expires.valueOf() < Date.now() ||
-      !compareHash(token, email, verificationToken.token)
+      !compareHashes(token, email, verificationToken.token)
     ) {
       throw new VerificationError('Token is invalid or has expired')
     }

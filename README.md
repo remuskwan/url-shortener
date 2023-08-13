@@ -35,6 +35,7 @@ Due to time constraints, certain functionalities have yet to be implemented:
 
 - Password validation to ensure accounts are created with strong passwords.
 - Search/filter functionality for user-created URLs.
+- Implement soft delete for user and URLs
 - Standalone Key Generation Store that generates random strings beforehand and stores them in a database
 - Distinct look and feel to the application.
 

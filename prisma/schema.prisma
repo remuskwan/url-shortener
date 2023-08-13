@@ -34,11 +34,9 @@ model Accounts {
 }
 
 model URL {
-  hash        String    @id
-  originalURL String    @map("original_url")
-  createdAt   DateTime  @default(now()) @map("created_at")
-  deletedAt   DateTime? @map("deleted_at") @db.Timestamp
-  user        User?     @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  userId      String?   @map("user_id")
-  qrCode      String?   @map("qr_code")
+  hash        String   @id
+  originalURL String   @map("original_url")
+  createdAt   DateTime @default(now()) @map("created_at")
+  user        User?    @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  userId      String?  @map("user_id")
 }

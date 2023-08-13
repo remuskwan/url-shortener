@@ -1,4 +1,4 @@
-import { addUrlSchema, byLoggedInUserSchema, byUserSchema } from '~/schemas/url'
+import { addUrlSchema, byLoggedInUserSchema } from '~/schemas/url'
 import { protectedProcedure, publicProcedure, router } from '~/server/trpc'
 import { defaultUrlSelect, urlSelectWithUser } from './url.select'
 import { z } from 'zod'
@@ -36,32 +36,6 @@ export const urlRouter = router({
 
       return { items, nextCursor }
     }),
-  byUser: publicProcedure.input(byUserSchema).query(async ({ ctx, input }) => {
-    const limit = input.limit ?? 50
-    const { cursor } = input
-
-    const items = await ctx.prisma.uRL.findMany({
-      select: defaultUrlSelect,
-      take: limit + 1,
-      cursor: cursor ? { hash: cursor } : undefined,
-      orderBy: {
-        createdAt: input.order,
-      },
-      where: {
-        user: { username: input.username },
-      },
-    })
-    let nextCursor: typeof cursor | undefined = undefined
-    if (items.length > limit) {
-      // Remove the last item and use it as next cursor
-
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      const nextItem = items.pop()!
-      nextCursor = nextItem.hash
-    }
-
-    return { items, nextCursor }
-  }),
   byHash: publicProcedure
     .input(z.object({ hash: z.string() }))
     .query(async ({ ctx, input: { hash } }) => {

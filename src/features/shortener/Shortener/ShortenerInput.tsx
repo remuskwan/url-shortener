@@ -15,6 +15,7 @@ import { z } from 'zod'
 import { type RouterOutput, trpc } from '~/utils/trpc'
 import { useState } from 'react'
 import { CopyAction } from '../ShortenerActions'
+import { formatNewURL } from '~/features/urls/utils/formatNewURL'
 
 interface ShortenerInputProps {
   onSuccess?: (data: RouterOutput['url']['add']) => void
@@ -44,7 +45,7 @@ export const ShortenerInput: React.FC<ShortenerInputProps> = ({
   const addUrlMutation = trpc.url.add.useMutation({
     onSuccess: (data) => {
       toast({ description: 'URL shortened!', status: 'success' })
-      setNewURL(`${window.location.href}${data.hash}`)
+      setNewURL(formatNewURL(data.hash))
       if (!!onSuccess) {
         onSuccess(data)
       }

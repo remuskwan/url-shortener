@@ -1,4 +1,4 @@
-import { Box, Flex, Skeleton, Text } from '@chakra-ui/react'
+import { Box, Button, Flex, Skeleton, Text } from '@chakra-ui/react'
 
 import { noop } from 'lodash'
 import { useRouter } from 'next/router'
@@ -18,6 +18,7 @@ import { trpc } from '~/utils/trpc'
 const title = env.NEXT_PUBLIC_APP_NAME
 
 const SignIn = () => {
+  const router = useRouter()
   useRedirectIfSignedIn()
 
   return (
@@ -44,6 +45,13 @@ const SignIn = () => {
                   <SignInForm />
                 </Suspense>
               </SignInContextProvider>
+              <Button
+                variant="link"
+                onClick={() => router.push('/')}
+                mt="2.5rem"
+              >
+                Back to main page
+              </Button>
             </Flex>
           </Box>
         </LoginGridArea>

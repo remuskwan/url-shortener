@@ -8,10 +8,6 @@ import { useZodForm } from '~/lib/form'
 import { HOME } from '~/lib/routes'
 import { trpc } from '~/utils/trpc'
 
-interface EmailInputProps {
-  onSuccess: (email: string) => void
-}
-
 export const signInSchema = z.object({
   email: z
     .string()
@@ -21,7 +17,7 @@ export const signInSchema = z.object({
   password: z.string().trim().min(1, 'Please enter a password.'),
 })
 
-export const EmailInput: React.FC<EmailInputProps> = ({ onSuccess }) => {
+export const EmailInput = () => {
   const toast = useToast()
   const {
     register,

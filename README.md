@@ -28,10 +28,10 @@ Access the live demo at https://short-re.vercel.app
 
 ### Architecture
 The database contains two tables, User and URL. URLs with userIds can be managed by users when they are logged in.
-![whiteboard_exported_image-2](https://github.com/remuskwan/url-shortener/assets/36059985/9e88ad70-69b8-45fb-9ebb-22d755745e2d)
+![whiteboard_exported_image-2](https://github.com/remuskwan/url-shortener/assets/36059985/9f3ad84b-1700-4a05-8625-1e83c49332bd)
 
 The following diagram illustrates the general flow E2E of several functionalities of the application.
-![whiteboard_exported_image](https://github.com/remuskwan/url-shortener/assets/36059985/84b64370-8123-4f04-8fe2-3f3dd720eef9)
+![whiteboard_exported_image](https://github.com/remuskwan/url-shortener/assets/36059985/77f9bc23-486d-4de1-816a-725f170fe113)
 
 ### Handling Encoding Collisions
 

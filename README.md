@@ -12,7 +12,7 @@ A submission for DCUBE's TAP assessment 2023, created by [Remus Kwan](https://ww
 
 ## Demo
 
-Access the live demo at https://url-shortener-remus.vercel.app/
+Access the live demo at https://short-re.vercel.app
 
 ## Technical Considerations
 

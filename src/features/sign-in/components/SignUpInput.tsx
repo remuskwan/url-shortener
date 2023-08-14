@@ -14,10 +14,13 @@ export const signInSchema = z.object({
     .trim()
     .min(1, 'Please enter an email address.')
     .email({ message: 'Please enter a valid email address.' }),
-  password: z.string().trim().min(1, 'Please enter a password.'),
+  password: z
+    .string()
+    .trim()
+    .min(8, 'Passwords should be at least 8 characters long.'),
 })
 
-export const EmailInput = () => {
+export const SignUpInput = () => {
   const toast = useToast()
   const {
     register,
@@ -31,7 +34,7 @@ export const EmailInput = () => {
 
   const router = useRouter()
 
-  const loginMutation = trpc.auth.login.useMutation({
+  const signUpMutation = trpc.auth.signUp.useMutation({
     onError: (error) => {
       setError('email', { message: error.message })
       setError('password', { message: error.message })
@@ -44,12 +47,13 @@ export const EmailInput = () => {
     }
   }, [router.query.error, setError])
 
-  const handleSignIn = handleSubmit(({ email, password }) => {
-    return loginMutation.mutate(
+  const handleSignUp = handleSubmit(({ email, password }) => {
+    return signUpMutation.mutate(
       { email, password },
       {
         onSuccess: async (data) => {
-          toast({ title: `Welcome back, ${data?.username}!` })
+          //TODO: change to dashboard page
+          toast({ title: `Sign up with email ${data?.email} successful!` })
           await router.push(String(router.query[CALLBACK_URL_KEY] ?? HOME))
         },
       }
@@ -57,12 +61,12 @@ export const EmailInput = () => {
   })
 
   return (
-    <form onClick={handleSignIn} noValidate>
+    <form onSubmit={handleSignUp} noValidate>
       <FormControl
         id="email"
         isRequired
         isInvalid={!!errors.email}
-        isReadOnly={loginMutation.isLoading}
+        isReadOnly={signUpMutation.isLoading}
       >
         <FormLabel requiredIndicator={<></>}>Email</FormLabel>
         <Input placeholder="e.g. jane.doe@gmail.com" {...register('email')} />
@@ -72,7 +76,7 @@ export const EmailInput = () => {
         id="password"
         isRequired
         isInvalid={!!errors.password}
-        isReadOnly={loginMutation.isLoading}
+        isReadOnly={signUpMutation.isLoading}
         mt="1rem"
       >
         <FormLabel requiredIndicator={<></>}>Password</FormLabel>
@@ -84,8 +88,8 @@ export const EmailInput = () => {
         <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
       </FormControl>
       <Wrap shouldWrapChildren direction="row" align="center" mt="1rem">
-        <Button type="submit" isLoading={loginMutation.isLoading}>
-          Log in
+        <Button type="submit" isLoading={signUpMutation.isLoading}>
+          Sign up
         </Button>
       </Wrap>
     </form>

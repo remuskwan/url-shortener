@@ -81,23 +81,23 @@ export const EmailInput = () => {
         id="email"
         isRequired
         isInvalid={!!errors.email}
-        isReadOnly={loginMutation.isLoading}
+        isReadOnly={loginMutation.isLoading || signUpMutation.isLoading}
       >
         <FormLabel requiredIndicator={<></>}>Email</FormLabel>
-        <Input placeholder="e.g. jane.doe@open.gov.sg" {...register('email')} />
+        <Input placeholder="e.g. jane.doe@gmail.com" {...register('email')} />
         <FormErrorMessage>{errors.email?.message}</FormErrorMessage>
       </FormControl>
       <FormControl
         id="email"
         isRequired
         isInvalid={!!errors.password}
-        isReadOnly={loginMutation.isLoading}
+        isReadOnly={loginMutation.isLoading || signUpMutation.isLoading}
         mt="1rem"
       >
         <FormLabel requiredIndicator={<></>}>Password</FormLabel>
         <Input
           type="password"
-          placeholder="Enter your password"
+          placeholder="Enter a password."
           {...register('password')}
         />
         <FormErrorMessage>{errors.password?.message}</FormErrorMessage>

@@ -8,7 +8,7 @@ import { compareHash, hashPassword } from './auth.util'
 
 export const authRouter = router({
   signUp: publicProcedure
-    .input(z.object({ email: z.string().email(), password: z.string().min(8) }))
+    .input(z.object({ email: z.string().email(), password: z.string() }))
     .mutation(async ({ ctx, input: { email, password } }) => {
       try {
         return await ctx.prisma.$transaction(async (tx) => {

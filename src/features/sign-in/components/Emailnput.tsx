@@ -81,7 +81,7 @@ export const EmailInput = () => {
         id="email"
         isRequired
         isInvalid={!!errors.email}
-        isReadOnly={loginMutation.isLoading}
+        isReadOnly={loginMutation.isLoading || signUpMutation.isLoading}
       >
         <FormLabel requiredIndicator={<></>}>Email</FormLabel>
         <Input placeholder="e.g. jane.doe@gmail.com" {...register('email')} />
@@ -91,13 +91,13 @@ export const EmailInput = () => {
         id="email"
         isRequired
         isInvalid={!!errors.password}
-        isReadOnly={loginMutation.isLoading}
+        isReadOnly={loginMutation.isLoading || signUpMutation.isLoading}
         mt="1rem"
       >
         <FormLabel requiredIndicator={<></>}>Password</FormLabel>
         <Input
           type="password"
-          placeholder="Passwords should be at least 8 characters long."
+          placeholder="Enter a password."
           {...register('password')}
         />
         <FormErrorMessage>{errors.password?.message}</FormErrorMessage>

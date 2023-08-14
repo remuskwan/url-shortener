@@ -92,16 +92,10 @@ npm i
 cp .env.example .env
 ```
 
-#### Retrieving client-side environment variables in code
-
-⚠️ When adding client-only environment variables in NextJS, you must prefix the variable with `NEXT_PUBLIC_` to ensure that the variable is exposed to the browser. For example, if you want to add a variable called `MY_ENV_VAR`, you should add it to your `.env` file as `NEXT_PUBLIC_MY_ENV_VAR`.
-
-You will also need to update [src/env.mjs](src/env.mjs#L17) to explicitly reference the variable so NextJS will correctly bundle the environment variable into the client-side bundle.
-
 ### Start database
 
 ```bash
-# Assumes that you have previously copied .env.example to .env.development.local
+# Assumes that you have previously copied .env.example to .env
 npm run setup
 ```
 

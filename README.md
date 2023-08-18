@@ -12,7 +12,7 @@ A submission for DCUBE's TAP assessment 2023, created by [Remus Kwan](https://ww
 
 ## Demo
 
-Access the live demo at https://url-shortener-remus.vercel.app/
+Access the live demo at https://short-re.vercel.app
 
 ## Technical Considerations
 
@@ -27,6 +27,11 @@ Access the live demo at https://url-shortener-remus.vercel.app/
 - OGP's [Starter Kit](https://start.open.gov.sg/) as a kickstart for the project.
 
 ### Architecture
+The database contains two tables, User and URL. URLs with userIds can be managed by users when they are logged in.
+![whiteboard_exported_image-2](https://github.com/remuskwan/url-shortener/assets/36059985/9e88ad70-69b8-45fb-9ebb-22d755745e2d)
+
+The following diagram illustrates the general flow E2E of several functionalities of the application.
+![whiteboard_exported_image](https://github.com/remuskwan/url-shortener/assets/36059985/84b64370-8123-4f04-8fe2-3f3dd720eef9)
 
 ### Handling Encoding Collisions
 
@@ -61,6 +66,7 @@ Due to time constraints, certain functionalities have yet to be implemented:
 - Password validation to ensure accounts are created with strong passwords.
 - Search/filter functionality for user-created URLs.
 - Implement soft delete for user and URLs
+- Migrate to NoSQL (eg. MongoDB, DynamoDB) due to the relatively few relations and the potential performance improvement
 - Standalone Key Generation Store that generates random strings beforehand and stores them in a database
 - Forgot password + email verification
 - Account management such as updating profile, deleting account etc.
